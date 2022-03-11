@@ -5,14 +5,15 @@ using System.Text;
 
 namespace PracticeAPI.Infrastructure.Exceptions
 {
-    public class WebResponseException : WebException
+    public class WebResponseException : Exception
     {
-        private WebResponseException(string errorMessage) : base(errorMessage)
+        public HttpStatusCode ResponseCode;
+        public string Message;
+
+        public WebResponseException(HttpStatusCode responseCode, string message)
         {
-        }
-        public WebResponseException(HttpStatusCode responseCode, string errorMessage)
-            : this($"Http{responseCode}:{Enum.GetName(typeof(HttpStatusCode), responseCode)} - {errorMessage}")
-        {
+            ResponseCode = responseCode;
+            Message = message;
         }
     }
 }
