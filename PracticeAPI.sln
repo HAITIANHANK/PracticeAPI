@@ -10,6 +10,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PracticeAPI.Adapter", "Adapter\PracticeAPI.Adapter\PracticeAPI.Adapter.csproj", "{3DAAE30F-1866-494A-B865-A0E76F1B0E32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PracticeAPI.Infrastructure", "Infrastructure\PracticeAPI.Infrastructure\PracticeAPI.Infrastructure.csproj", "{838C5000-E0C0-42A3-BE27-8169E2B190A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +24,14 @@ Global
 		{E709E9C7-C80B-42CD-B65E-FBBE2A34BBFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E709E9C7-C80B-42CD-B65E-FBBE2A34BBFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E709E9C7-C80B-42CD-B65E-FBBE2A34BBFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DAAE30F-1866-494A-B865-A0E76F1B0E32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DAAE30F-1866-494A-B865-A0E76F1B0E32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DAAE30F-1866-494A-B865-A0E76F1B0E32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DAAE30F-1866-494A-B865-A0E76F1B0E32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{838C5000-E0C0-42A3-BE27-8169E2B190A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{838C5000-E0C0-42A3-BE27-8169E2B190A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{838C5000-E0C0-42A3-BE27-8169E2B190A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{838C5000-E0C0-42A3-BE27-8169E2B190A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

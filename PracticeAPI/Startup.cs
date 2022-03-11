@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using PracticeAPI.Adapter.Contracts;
+using PracticeAPI.Adapter.Impl;
 
 namespace PracticeAPI
 {
@@ -25,6 +27,7 @@ namespace PracticeAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IUserAdapter, UserAdapter>();
             services.AddControllers();
         }
 
