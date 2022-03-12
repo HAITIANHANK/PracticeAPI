@@ -4,8 +4,4 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Facade\PracticeAPI.Facade\PracticeAPI.Facade.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -13,6 +13,13 @@ namespace PracticeAPI.Adapter.Contracts
         /// <summary>
         /// Takes a name and saves it to the DB.
         /// </summary>
+        /// <remarks>
+        ///     <para>
+        ///         Also saves a Full Name value based on 
+        ///         the received data by concatenating the
+        ///         first and last names separated by a space
+        ///     </para>
+        /// </remarks>
         /// <param name="firstName"></param>
         /// <param name="lastName"></param>
         /// <returns></returns>

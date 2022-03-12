@@ -12,6 +12,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PracticeAPI.Adapter.Contracts;
 using PracticeAPI.Adapter.Impl;
+using PracticeAPI.Data;
+using PracticeAPI.Facade.Contracts;
+using PracticeAPI.Facade.Impl;
+using ConnStrings = PracticeAPI.Infrastructure.SystemConstants.AppSettings.ConnStrings;
 
 namespace PracticeAPI
 {
@@ -28,6 +32,8 @@ namespace PracticeAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IUserAdapter, UserAdapter>();
+            services.AddScoped<IUserFacade, UserFacade>();
+            services.AddPracticeAPIDataService(Configuration.GetConnectionString(ConnStrings.PracticeAPI));
             services.AddControllers();
         }
 

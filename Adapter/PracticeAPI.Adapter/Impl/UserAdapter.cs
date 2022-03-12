@@ -1,4 +1,6 @@
 ﻿using PracticeAPI.Adapter.Contracts;
+using PracticeAPI.BusinessEntities.User;
+using PracticeAPI.Facade.Contracts;
 using PracticeAPI.Infrastructure.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,13 @@ namespace PracticeAPI.Adapter.Impl
     /// <inheritdoc cref="IUserAdapter"/>
     public class UserAdapter : IUserAdapter
     {
+        private readonly IUserFacade _userFacade;
+
+        public UserAdapter(IUserFacade userFacade)
+        {
+            _userFacade = userFacade;
+        }
+
         /// <inheritdoc/>
         public async Task SaveName(string firstName, string lastName)
         {
@@ -42,8 +51,12 @@ namespace PracticeAPI.Adapter.Impl
                 firstName = multiSpaceRegex.Replace(firstName, " ");
             if (multiSpaceRegex.IsMatch(lastName))
                 lastName = multiSpaceRegex.Replace(lastName, " ");
-
-            // TODO: Wire up to facade once created
+            await _userFacade.SaveName(new UserBE
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                FullName = $"{firstName} {lastName}"
+            });
         }
     }
 }
