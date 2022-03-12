@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\PracticeAPI.Data\PracticeAPI.Data.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\PracticeAPI.Infrastructure\PracticeAPI.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
