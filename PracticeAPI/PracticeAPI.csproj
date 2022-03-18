@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Adapter\PracticeAPI.Adapter\PracticeAPI.Adapter.csproj" />
+    <ProjectReference Include="..\BusinessModels\PracticeAPI.BusinessModels\PracticeAPI.BusinessModels.csproj" />
   </ItemGroup>
 
 

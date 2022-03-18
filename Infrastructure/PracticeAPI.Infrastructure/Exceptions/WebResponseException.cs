@@ -8,7 +8,7 @@ namespace PracticeAPI.Infrastructure.Exceptions
     public class WebResponseException : Exception
     {
         public HttpStatusCode ResponseCode;
-        public string Message;
+        public new string Message;
 
         public WebResponseException(HttpStatusCode responseCode, string message)
         {

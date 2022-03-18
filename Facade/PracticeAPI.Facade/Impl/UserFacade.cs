@@ -20,8 +20,27 @@ namespace PracticeAPI.Facade.Impl
 
         public async Task SaveName(UserBE user)
         {
-            UserEntity userEntity = user;
+            UserEntity userEntity = new UserEntity()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                FullName = user.FullName
+            };
             await _dataSvc.UserRepo.SaveName(userEntity);
+        }
+
+        public async Task<UserBE> GetUser(int userID)
+        {
+            UserEntity userEntity = await _dataSvc.UserRepo.GetUser(userID);
+
+            UserBE userBE = userEntity == null ? null : new UserBE()
+            {
+                FirstName = userEntity.FirstName,
+                LastName = userEntity.LastName,
+                FullName = userEntity.FullName
+            };
+
+            return userBE;
         }
     }
 }

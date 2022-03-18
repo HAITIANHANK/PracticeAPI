@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PracticeAPI.BusinessEntities.User;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,5 +25,6 @@ namespace PracticeAPI.Adapter.Contracts
         /// <param name="lastName"></param>
         /// <returns></returns>
         Task SaveName(string firstName, string lastName);
+        Task<UserBE> GetUser(int userID);
     }
 }

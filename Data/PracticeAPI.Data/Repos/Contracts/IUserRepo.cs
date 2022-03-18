@@ -18,5 +18,14 @@ namespace PracticeAPI.Data.Repos.Contracts
         /// <param name="lastName"></param>
         /// <returns></returns>
         Task SaveName(UserEntity user);
+        /// <summary>
+        /// Retrieves a user based on the ID provided.
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException">
+        ///     Thrown if more than one user returned from database.
+        /// </exception>
+        Task<UserEntity> GetUser(int userID);
     }
 }

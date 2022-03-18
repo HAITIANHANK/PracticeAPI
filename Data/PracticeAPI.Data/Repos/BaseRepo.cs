@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,16 +17,31 @@ namespace PracticeAPI.Data.Repos
         }
         protected abstract string TableName { get; }
 
-        protected virtual async Task Create(string sproc, SqlParameter[] sprocParams)
+        protected virtual async Task Create(string sproc, List<SqlParameter> sprocParams)
         {
             using SqlConnection conn = _dataSvc.GetConnection();
             await conn.OpenAsync();
             using SqlCommand cmd = conn.CreateCommand();
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.CommandText = sproc;
-            cmd.Parameters.AddRange(sprocParams);
+            cmd.Parameters.AddRange(sprocParams.ToArray());
             await cmd.ExecuteNonQueryAsync();
             await conn.CloseAsync();
+        }
+
+        protected virtual async Task<DataTable> Get(string sproc, List<SqlParameter> sprocParams)
+        {
+            using SqlConnection conn = _dataSvc.GetConnection();
+            await conn.OpenAsync();
+            using SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.CommandText = sproc;
+            cmd.Parameters.AddRange(sprocParams.ToArray());
+            using SqlDataReader queryResults = await cmd.ExecuteReaderAsync();
+            DataTable resultTable = new DataTable();
+            resultTable.Load(queryResults);
+            await conn.CloseAsync();
+            return resultTable;
         }
     }
 }

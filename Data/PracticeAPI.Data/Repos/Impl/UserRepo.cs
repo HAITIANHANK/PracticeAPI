@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Data;
 
 namespace PracticeAPI.Data.Repos.Impl
 {
@@ -41,12 +43,49 @@ namespace PracticeAPI.Data.Repos.Impl
                     Value = user.FullName
                 }
             };
-            await base.Create(StoredProcedures.InsertUser, parameters.ToArray());
+            await base.Create(StoredProcedures.InsertUser, parameters);
+        }
+
+        /// <inheritdoc />
+        public async Task<UserEntity> GetUser(int userID)
+        {
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter()
+                {
+                    ParameterName = $"@{nameof(UserEntity.UserID)}",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = userID
+                }
+            };
+            
+            DataTable queryData =
+                await base.Get(StoredProcedures.GetUser, parameters);
+
+            List<UserEntity> userEntities = new List<UserEntity>();
+
+            if (queryData.Rows.Count == 0)
+                return null;
+
+            foreach (DataRow row in queryData.Rows)
+            {
+                UserEntity entity = new UserEntity()
+                {
+                    UserID = row.Field<int>(nameof(UserEntity.UserID)),
+                    FirstName = row.Field<string>(nameof(UserEntity.FirstName)),
+                    LastName = row.Field<string>(nameof(UserEntity.LastName)),
+                    FullName = row.Field<string>(nameof(UserEntity.FullName))
+                };
+                userEntities.Add(entity);
+            }
+
+            return userEntities.SingleOrDefault();
         }
 
         private struct StoredProcedures
         {
             public const string InsertUser = "dbo_usp_INSERT_Users";
+            public const string GetUser = "dbo_usp_SELECT_Users";
         }
     }
 }

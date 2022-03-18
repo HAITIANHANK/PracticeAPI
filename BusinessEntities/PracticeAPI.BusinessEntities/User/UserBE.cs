@@ -6,8 +6,8 @@ namespace PracticeAPI.BusinessEntities.User
 {
     public class UserBE
     {
-        public string FirstName;
-        public string LastName;
-        public string FullName;
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string FullName { get; set; }
     }
 }
