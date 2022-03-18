@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PracticeAPI.Data
 {
-    public class BaseDataService
+    public abstract class BaseDataService
     {
         private readonly string _connStr;
         public BaseDataService(string connStr)

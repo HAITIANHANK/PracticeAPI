@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BusinessEntities\PracticeAPI.BusinessEntities\PracticeAPI.BusinessEntities.csproj" />
     <ProjectReference Include="..\..\Data\PracticeAPI.Data\PracticeAPI.Data.csproj" />
     <ProjectReference Include="..\..\Infrastructure\PracticeAPI.Infrastructure\PracticeAPI.Infrastructure.csproj" />
   </ItemGroup>

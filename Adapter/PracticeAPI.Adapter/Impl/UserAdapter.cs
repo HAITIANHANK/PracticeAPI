@@ -58,5 +58,15 @@ namespace PracticeAPI.Adapter.Impl
                 FullName = $"{firstName} {lastName}"
             });
         }
+
+        public async Task<UserBE> GetUser(int userID)
+        {
+            UserBE userBE = await _userFacade.GetUser(userID);
+            if (userBE == null)
+            {
+                throw new WebResponseException(HttpStatusCode.NotFound, "User could not be found for ID provided");
+            }
+            return userBE;
+        }
     }
 }

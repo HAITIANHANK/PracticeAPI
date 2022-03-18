@@ -9,5 +9,6 @@ namespace PracticeAPI.Facade.Contracts
     public interface IUserFacade
     {
         Task SaveName(UserBE userBE);
+        Task<UserBE> GetUser(int userID);
     }
 }

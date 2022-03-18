@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PracticeAPI.Adapter.Contracts;
+using PracticeAPI.BusinessEntities.User;
+using PracticeAPI.BusinessModels.User;
 using PracticeAPI.Infrastructure.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -27,6 +29,34 @@ namespace PracticeAPI.Controllers
                 await base.HandleWebResponseException(webEx);
             }
             catch 
+            {
+                throw;
+            }
+        }
+
+        [HttpGet]
+        [Route("{controller}/{action}/{userID}")]
+        public async Task<ActionResult<UserBM>> GetUser([FromRoute]int userID)
+        {
+            try
+            {
+                UserBE userBE = await _userAdapter.GetUser(userID);
+
+                UserBM userBM = new UserBM()
+                {
+                    FirstName = userBE.FirstName,
+                    LastName = userBE.LastName,
+                    FullName = userBE.FullName
+                };
+
+                return userBM;
+            }
+            catch (WebResponseException webEx)
+            {
+                await base.HandleWebResponseException(webEx);
+                return null;
+            }
+            catch
             {
                 throw;
             }

@@ -16,6 +16,8 @@ using PracticeAPI.Data;
 using PracticeAPI.Facade.Contracts;
 using PracticeAPI.Facade.Impl;
 using ConnStrings = PracticeAPI.Infrastructure.SystemConstants.AppSettings.ConnStrings;
+using System.Text.Json;
+
 
 namespace PracticeAPI
 {
@@ -31,10 +33,10 @@ namespace PracticeAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
             services.AddScoped<IUserAdapter, UserAdapter>();
             services.AddScoped<IUserFacade, UserFacade>();
             services.AddPracticeAPIDataService(Configuration.GetConnectionString(ConnStrings.PracticeAPI));
-            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
