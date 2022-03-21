@@ -44,6 +44,7 @@ namespace PracticeAPI.Controllers
 
                 UserBM userBM = new UserBM()
                 {
+                    UserID = userBE.UserID,
                     FirstName = userBE.FirstName,
                     LastName = userBE.LastName,
                     FullName = userBE.FullName
