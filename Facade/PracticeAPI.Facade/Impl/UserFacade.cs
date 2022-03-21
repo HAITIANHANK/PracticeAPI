@@ -35,6 +35,7 @@ namespace PracticeAPI.Facade.Impl
 
             UserBE userBE = userEntity == null ? null : new UserBE()
             {
+                UserID = userEntity.UserID,
                 FirstName = userEntity.FirstName,
                 LastName = userEntity.LastName,
                 FullName = userEntity.FullName
