@@ -27,5 +27,6 @@ namespace PracticeAPI.Data.Repos.Contracts
         ///     Thrown if more than one user returned from database.
         /// </exception>
         Task<UserEntity> GetUser(int userID);
+        Task<UserEntity> UpdateUser(UserEntity user);
     }
 }

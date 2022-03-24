@@ -7,6 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Data;
+using System.Reflection;
+using PracticeAPI.Infrastructure.Exceptions;
+using System.Net;
 
 namespace PracticeAPI.Data.Repos.Impl
 {
@@ -62,12 +65,56 @@ namespace PracticeAPI.Data.Repos.Impl
             DataTable queryData =
                 await base.Get(StoredProcedures.GetUser, parameters);
 
+            List<UserEntity> userEntities = CreateUserEntity(queryData);
+
+            return userEntities.SingleOrDefault();
+        }
+
+        public async Task<UserEntity> UpdateUser(UserEntity user)
+        {
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter()
+                {
+                    ParameterName = $"@{nameof(user.UserID)}",
+                    SqlDbType = System.Data.SqlDbType.Int,
+                    Value = user.UserID
+                },
+                new SqlParameter()
+                {
+                    ParameterName = $"@{nameof(user.FirstName)}",
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    Value = user.FirstName
+                },
+                new SqlParameter()
+                {
+                    ParameterName = $"@{nameof(user.LastName)}",
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    Value = user.LastName
+                },
+                new SqlParameter()
+                {
+                    ParameterName = $"@{nameof(user.FullName)}",
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                    Value = user.FullName
+                }
+            };
+
+            DataTable queryData =
+                await base.Update(StoredProcedures.UpdateUser, parameters);
+
+            List<UserEntity> userEntities = CreateUserEntity(queryData);
+            return userEntities.SingleOrDefault();
+        }
+
+        private List<UserEntity> CreateUserEntity(DataTable userDataTable) 
+        {
             List<UserEntity> userEntities = new List<UserEntity>();
 
-            if (queryData.Rows.Count == 0)
+            if (userDataTable.Rows.Count == 0)
                 return null;
 
-            foreach (DataRow row in queryData.Rows)
+            foreach (DataRow row in userDataTable.Rows)
             {
                 UserEntity entity = new UserEntity()
                 {
@@ -78,14 +125,13 @@ namespace PracticeAPI.Data.Repos.Impl
                 };
                 userEntities.Add(entity);
             }
-
-            return userEntities.SingleOrDefault();
+            return userEntities;
         }
-
         private struct StoredProcedures
         {
             public const string InsertUser = "dbo_usp_INSERT_Users";
             public const string GetUser = "dbo_usp_SELECT_Users";
+            public const string UpdateUser = "dbo_usp_UPDATE_Users";
         }
     }
 }

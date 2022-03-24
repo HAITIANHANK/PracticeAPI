@@ -33,15 +33,32 @@ namespace PracticeAPI.Facade.Impl
         {
             UserEntity userEntity = await _dataSvc.UserRepo.GetUser(userID);
 
-            UserBE userBE = userEntity == null ? null : new UserBE()
-            {
-                UserID = userEntity.UserID,
-                FirstName = userEntity.FirstName,
-                LastName = userEntity.LastName,
-                FullName = userEntity.FullName
-            };
+            UserBE userBE = userEntity == null 
+                ? null 
+                : new UserBE.Builder(userEntity.FirstName, userEntity.LastName)
+                    .WithUserID(userEntity.UserID)
+                    .Build();
 
             return userBE;
+        }
+
+        public async Task<UserBE> UpdateUser(UserBE userBE)
+        {
+            UserEntity userEntity = new UserEntity()
+            {
+                UserID = userBE.UserID,
+                FirstName = userBE.FirstName,
+                LastName = userBE.LastName,
+                FullName = userBE.FullName
+            };
+            UserEntity updatedUserEntity = await _dataSvc.UserRepo.UpdateUser(userEntity);
+
+            UserBE updatedUserBE =
+                new UserBE.Builder(updatedUserEntity.FirstName, updatedUserEntity.LastName)
+                .WithUserID(updatedUserEntity.UserID)
+                .Build();
+
+            return updatedUserBE;
         }
     }
 }

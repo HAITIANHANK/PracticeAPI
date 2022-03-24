@@ -26,5 +26,6 @@ namespace PracticeAPI.Adapter.Contracts
         /// <returns></returns>
         Task SaveName(string firstName, string lastName);
         Task<UserBE> GetUser(int userID);
+        Task<UserBE> UpdateUser(UserBE user);
     }
 }
