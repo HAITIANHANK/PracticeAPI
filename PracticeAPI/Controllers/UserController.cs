@@ -18,7 +18,7 @@ namespace PracticeAPI.Controllers
             _userAdapter = userAdapter;
         }
         [HttpPost]
-        public async Task SaveName([FromQuery]string firstName, [FromQuery]string lastName)
+        public async Task SaveName([FromQuery] string firstName, [FromQuery] string lastName)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace PracticeAPI.Controllers
             {
                 await base.HandleWebResponseException(webEx);
             }
-            catch 
+            catch
             {
                 throw;
             }
@@ -36,7 +36,7 @@ namespace PracticeAPI.Controllers
 
         [HttpGet]
         [Route("{controller}/{action}/{userID}")]
-        public async Task<ActionResult<UserBM>> GetUser([FromRoute]int userID)
+        public async Task<ActionResult<UserBM>> GetUser([FromRoute] int userID)
         {
             try
             {
@@ -51,6 +51,39 @@ namespace PracticeAPI.Controllers
                 };
 
                 return userBM;
+            }
+            catch (WebResponseException webEx)
+            {
+                await base.HandleWebResponseException(webEx);
+                return null;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<UserBM>> UpdateUser([FromBody] UserBM userToUpdate)
+        {
+            try
+            {
+                UserBE userBE =
+                    new UserBE.Builder(userToUpdate.FirstName, userToUpdate.LastName)
+                    .WithUserID(userToUpdate.UserID)
+                    .Build();
+
+                UserBE updatedUserBE = await _userAdapter.UpdateUser(userBE);
+
+                UserBM updatedUserBM = new UserBM()
+                {
+                    UserID = updatedUserBE.UserID,
+                    FirstName = updatedUserBE.FirstName,
+                    LastName = updatedUserBE.LastName,
+                    FullName = updatedUserBE.FullName
+                };
+
+                return updatedUserBM;
             }
             catch (WebResponseException webEx)
             {

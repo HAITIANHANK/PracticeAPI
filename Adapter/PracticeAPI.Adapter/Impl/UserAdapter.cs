@@ -24,39 +24,11 @@ namespace PracticeAPI.Adapter.Impl
         /// <inheritdoc/>
         public async Task SaveName(string firstName, string lastName)
         {
+            UserBE userBE =
+                new UserBE.Builder(firstName, lastName)
+                .Build();
 
-            if (string.IsNullOrWhiteSpace(firstName))
-            {
-                throw new WebResponseException(HttpStatusCode.BadRequest, "First name must not be null, empty, or white space");
-            }
-
-            if (string.IsNullOrWhiteSpace(lastName))
-            {
-                throw new WebResponseException(HttpStatusCode.BadRequest, "Last name must not be null, empty, or white space");
-            }
-
-            firstName = firstName.Trim();
-            if (firstName.Length > 50)
-            {
-                throw new WebResponseException(HttpStatusCode.BadRequest, "First name cannot be more than 50 characters");
-            }
-            lastName = lastName.Trim();
-            if (lastName.Length > 50)
-            {
-                throw new WebResponseException(HttpStatusCode.BadRequest, "Last name cannot be more than 50 characters");
-            }
-
-            Regex multiSpaceRegex = new Regex(@"[^\S\r\n]{2,}");
-            if (multiSpaceRegex.IsMatch(firstName))
-                firstName = multiSpaceRegex.Replace(firstName, " ");
-            if (multiSpaceRegex.IsMatch(lastName))
-                lastName = multiSpaceRegex.Replace(lastName, " ");
-            await _userFacade.SaveName(new UserBE
-            {
-                FirstName = firstName,
-                LastName = lastName,
-                FullName = $"{firstName} {lastName}"
-            });
+            await _userFacade.SaveName(userBE);
         }
 
         public async Task<UserBE> GetUser(int userID)
@@ -67,6 +39,23 @@ namespace PracticeAPI.Adapter.Impl
                 throw new WebResponseException(HttpStatusCode.NotFound, "User could not be found for ID provided");
             }
             return userBE;
+        }
+
+        public async Task<UserBE> UpdateUser(UserBE user)
+        {
+            UserBE dbUser = await _userFacade.GetUser(user.UserID);
+            if (dbUser == null)
+            {
+                throw new WebResponseException(HttpStatusCode.NotFound, "User could not be found for ID provided");
+            }
+
+            dbUser.FirstName = user.FirstName;
+            dbUser.LastName = user.LastName;
+            dbUser.FullName = user.FullName;
+
+            UserBE updatedUser = await _userFacade.UpdateUser(dbUser);
+
+            return updatedUser;
         }
     }
 }

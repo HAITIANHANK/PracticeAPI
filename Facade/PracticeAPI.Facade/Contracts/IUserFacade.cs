@@ -10,5 +10,6 @@ namespace PracticeAPI.Facade.Contracts
     {
         Task SaveName(UserBE userBE);
         Task<UserBE> GetUser(int userID);
+        Task<UserBE> UpdateUser(UserBE userBE);
     }
 }

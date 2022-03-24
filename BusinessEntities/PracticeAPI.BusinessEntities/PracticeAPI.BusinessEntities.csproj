@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\PracticeAPI.Infrastructure\PracticeAPI.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
